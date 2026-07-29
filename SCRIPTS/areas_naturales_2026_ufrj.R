@@ -1,3 +1,4 @@
+#indicando mi cuenta de github
 library(usethis)
 use_git_config(user.name = "gloria-cdlc", user.email = "melissacdlc@gmail.com")
 library(usethis)
@@ -6,20 +7,27 @@ library(gitcreds)
 gitcreds::gitcreds_set()
 #
 #
+
 #### Actividade #####
+
 #Tydiverse
 ####Import -> tydi -> Transformar datos -> Modelar / Visualizar####
 install.packages("readxl")
 install.packages("tidyverse")
 install.packages("writexl")
+install.packages("here")
 
 ####Carregando pacotes####
 library(tidyverse)
 library(readxl)
+library(openxlsx)
+library(here)
 
+ 
 ####Importando solo datos####
-#uso_solo_rio <- read_excel("Classes de Uso do solo e Cobertura Vegetal - RJ.xlsx", sheet "Dados")
-#aps_rio <- read_excel("Areas_Protegidas_Rio.xlsx")
+uso_solo_rio <- read_excel(here("DATA", "Classes de Uso do solo e Cobertura Vegetal - RJ.xlsx"),
+                           sheet = "Dados")
+aps_rio <- read.xlsx(here("DATA", "aps_rio.xlsx"))
 
 ####Exploracao inicial dos dados####
 glimpse(uso_solo_rio)
@@ -69,6 +77,7 @@ porcentagens_uso_do_solo_Bairros_RJ <- uso_do_solo_Bairros_RJ %>%
   mutate(across(where(is.numeric), round, 2)) %>% #Función para reducir decimales
   select(`Bairros Rio de Janeiro`, Vegetacao_natural_porcentagem: Corpos_dagua_continental_porcentagem)#Seleccionar solo las columnas de interés
 View(porcentagens_uso_do_solo_Bairros_RJ)
+
 writexl::write_xlsx(porcentagens_uso_do_solo_Bairros_RJ,"Bairros Rio de Janeiro X Uso do solo - RJ.xlsx")
 
 
