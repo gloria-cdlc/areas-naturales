@@ -1,0 +1,21 @@
+# README
+
+
+## README
+
+O que faz o projeto
+
+## Running Code
+
+Como se organiza o projeto
+
+- Carpeta 1: DATA. Nela se encontram os arquivos em xlsx para realizar a
+  analise
+
+- Carpeta 2: SCript …
+
+- Carpeta 3
+
+## AUTORIA
+
+- Gloria M Cano
