@@ -67,21 +67,31 @@ estimativa_uso_do_solo <- uso_solo_categorias %>%
 
 ####filtrar Bairros RJ ####
 uso_do_solo_Bairros_RJ <- estimativa_uso_do_solo %>%
-  filter (`Bairros Rio de Janeiro`!= "Lapa") %>%
-  select(`Bairros Rio de Janeiro`, Uso_do_solo, Vegetacao_natural, Antropismos, Corpos_dagua_continental)
+  select(`RP`, Uso_do_solo, Vegetacao_natural, Antropismos, Corpos_dagua_continental)
 
 porcentagens_uso_do_solo_Bairros_RJ <- uso_do_solo_Bairros_RJ %>%
   mutate(Vegetacao_natural_porcentagem = (Vegetacao_natural/Uso_do_solo)*100) %>%
   mutate(Antropismos_porcentagem = (Antropismos/Uso_do_solo)*100) %>%
   mutate(Corpos_dagua_continental_porcentagem = (Corpos_dagua_continental/Uso_do_solo)*100) %>%
   mutate(across(where(is.numeric), round, 2)) %>% #Función para reducir decimales
-  select(`Bairros Rio de Janeiro`, Vegetacao_natural_porcentagem: Corpos_dagua_continental_porcentagem)#Seleccionar solo las columnas de interés
+  select(`RP`, Vegetacao_natural_porcentagem: Corpos_dagua_continental_porcentagem)#Seleccionar solo las columnas de interés
+
 View(porcentagens_uso_do_solo_Bairros_RJ)
 
-writexl::write_xlsx(porcentagens_uso_do_solo_Bairros_RJ,"Bairros Rio de Janeiro X Uso do solo - RJ.xlsx")
+#Plotando os antropismos por regiao
 
-
-
-
-
-
+plot <- ggplot(
+  porcentagens_uso_do_solo_Bairros_RJ,
+  aes(
+    x = reorder(`RP`, Antropismos_porcentagem),
+    y = Antropismos_porcentagem
+  )
+) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Porcentagem de antropismos por bairro",
+    x = "Regiao",
+    y = "Antropismos (%)"
+  ) +
+  theme_minimal(base_size = 10)
